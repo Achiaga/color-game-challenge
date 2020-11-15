@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { getTilesColors } from './helpers';
+import { getTilesColors, chooseLuckyTile } from './helpers';
 
 import GameBoard from './gameboard';
+import SettingsGame from './settings-game';
+import Countdown from './countdown';
 
 const GameBoardWrapper = styled.div`
 	padding: 1em 4em;
@@ -19,17 +21,22 @@ const Game = () => {
 	const [lives, setLives] = useState(2);
 
 	useEffect(() => {
-		const luckyTile = 1;
+		const luckyTile = chooseLuckyTile(rounds);
 		setLuckyTile(luckyTile);
 		setTiltesColors(getTilesColors(luckyTile, rounds));
 	}, []);
 
 	const goToNextLevel = () => {
 		const newRound = rounds + 1;
-		const luckyTileNow = 1;
+		const luckyTileNow = chooseLuckyTile(newRound);
 		setRounds(newRound);
 		setLuckyTile(luckyTileNow);
 		setTiltesColors(getTilesColors(luckyTileNow, newRound));
+	};
+
+	const handleFail = () => {
+		if (lives < 1) console.log('gameover');
+		setLives((lives) => lives - 1);
 	};
 
 	const handleSuccess = () => {
@@ -38,10 +45,13 @@ const Game = () => {
 
 	return (
 		<>
+			<SettingsGame rounds={rounds} />
+			{/* <Countdown /> */}
 			<GameBoardWrapper>
 				<GameBoard
 					tilesColors={tilesColors}
 					handleSuccess={handleSuccess}
+					handleFail={handleFail}
 					luckyTile={luckyTile}
 				/>
 			</GameBoardWrapper>
