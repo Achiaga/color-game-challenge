@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const getGirdTemplateColumnt = (numRows) => `
@@ -11,6 +12,7 @@ const BoardWrapper = styled.div`
 `;
 
 const Tile = styled.div`
+	opacity: ${(props) => (props.isVisible ? 1 : 0)};
 	border: 1px solid transparent;
 	position: relative;
 	flex-basis: ${({ numRows }) => numRows && getGirdTemplateColumnt(numRows)};
@@ -28,11 +30,18 @@ const Tile = styled.div`
 	}
 `;
 
-const GameBoard = ({ tilesColors, handleSuccess, luckyTile }) => {
+const GameBoard = ({ tilesColors, handleSuccess, handleFail, luckyTile }) => {
+	const [failedTiles, setFailedTiles] = useState([]);
+
 	const handleClick = (e) => {
 		const { id } = e.currentTarget;
-		if (luckyTile === Number(id)) return handleSuccess(id);
-		return;
+		if (id != luckyTile) {
+			handleFail();
+			setFailedTiles([...failedTiles, +id]);
+			return;
+		}
+		setFailedTiles([]);
+		return handleSuccess(id);
 	};
 
 	return (
@@ -45,6 +54,7 @@ const GameBoard = ({ tilesColors, handleSuccess, luckyTile }) => {
 						numRows={Math.sqrt(tilesColors.length)}
 						tileColor={tileColor}
 						onClick={handleClick}
+						isVisible={!failedTiles.includes(index)}
 					/>
 				);
 			})}

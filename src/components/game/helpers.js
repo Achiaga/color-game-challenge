@@ -10,13 +10,38 @@ const getBoardSize = (round) => {
 	return boardSize[round];
 };
 
+const randomizeSatLum = (random1, random2) => {
+	if (getMathRandom()) return random1;
+	return random2;
+};
+
+export const chooseLuckyTile = (round) => {
+	return getMathRandom(getBoardSize(round) - 1);
+};
+
 const getHSLColorStr = (rgb, sat = 50, lum = 50) => {
 	return `hsl(${rgb}, ${sat}%, ${lum}%)`;
 };
 
+function getBaseLog(x, y) {
+	return Math.log(y) / Math.log(x);
+}
+
+const getTop = (rounds) => {
+	return Math.round(100 - (getBaseLog(35, rounds) / 2) * 100);
+};
+
+const getBottom = (rounds) => {
+	return Math.round((getBaseLog(35, rounds) / 2) * 100);
+};
+
+const getSatLum = (rounds) => {
+	return randomizeSatLum(getTop(rounds), getBottom(rounds));
+};
+
 const getTileColor = (rgb, isLuckyTile, rounds) => {
 	if (isLuckyTile) {
-		return getHSLColorStr(rgb);
+		return getHSLColorStr(rgb, getSatLum(rounds), getSatLum(rounds));
 	}
 	return getHSLColorStr(rgb);
 };
