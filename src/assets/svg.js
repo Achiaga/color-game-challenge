@@ -33,6 +33,7 @@ export const ScoreSvg = ({ size = 15 }) => (
 export const HeartSvg = ({ size = 30 }) => (
 	<svg
 		id='Lives'
+		data-testid='heart-icon-id'
 		enableBackground='new 0 0 512.007 512.007'
 		height={`${size}%`}
 		width={`${size}%`}

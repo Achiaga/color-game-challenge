@@ -47,7 +47,6 @@ const Tile = styled.div`
 
 const GameBoard = ({ tilesColors, handleSuccess, handleFail, luckyTile }) => {
 	const [failedTiles, setFailedTiles] = useState([]);
-
 	useEffect(() => {
 		setFailedTiles([]);
 	}, [tilesColors]);
@@ -69,6 +68,7 @@ const GameBoard = ({ tilesColors, handleSuccess, handleFail, luckyTile }) => {
 					<Tile
 						key={index}
 						id={index}
+						data-testid='tile-id'
 						numRows={Math.sqrt(tilesColors.length)}
 						tileColor={tileColor}
 						onClick={handleClick}

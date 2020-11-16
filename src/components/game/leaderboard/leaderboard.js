@@ -12,7 +12,7 @@ import { KingSvg } from '../../../assets/svg';
 import Player from './player';
 
 const fakeData = [
-	{ name: 'Bot Adidas', score: 200 },
+	{ name: 'Bot Adidas', score: 100 },
 	{ name: 'Alfonso', score: 24 },
 	{ name: 'Bot Nike', score: 1 },
 ];
