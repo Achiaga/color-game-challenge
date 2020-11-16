@@ -28,11 +28,11 @@ function getBaseLog(x, y) {
 }
 
 const getTop = (rounds) => {
-	return Math.round(100 - (getBaseLog(35, rounds) / 2) * 100);
+	return Math.max(Math.round(100 - (getBaseLog(35, rounds + 1) / 2) * 100), 53);
 };
 
 const getBottom = (rounds) => {
-	return Math.round((getBaseLog(35, rounds) / 2) * 100);
+	return Math.min(Math.round((getBaseLog(35, rounds + 1) / 2) * 100), 47);
 };
 
 const getSatLum = (rounds) => {
