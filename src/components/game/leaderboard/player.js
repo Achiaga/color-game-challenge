@@ -12,8 +12,9 @@ const Player = ({ index, score, name, maxScore, handleUpdateLeaderBoard }) => {
 	}, [name]);
 
 	const handleUsernameInput = (e) => {
-		handleUpdateLeaderBoard(e.target.value);
-		setPlayerName(e.target.value);
+		const { value: userName } = e.target;
+		handleUpdateLeaderBoard(userName);
+		setPlayerName(userName);
 	};
 
 	return (

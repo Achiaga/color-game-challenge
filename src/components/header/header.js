@@ -37,7 +37,7 @@ const TileWord = styled(TileLetter)`
 
 const Header = () => {
 	return (
-		<Wrapper>
+		<Wrapper data-testid='header-id'>
 			<h1>
 				<TileLetter bg='#ff3333'>R</TileLetter>
 				<TileLetter bg='#37d437'>G</TileLetter>

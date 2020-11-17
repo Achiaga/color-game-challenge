@@ -7,43 +7,14 @@ import {
 	RestartButton,
 } from './styled-components';
 
-import { DEFAULT_USER_NAME } from '../../../constants/index';
 import { KingSvg } from '../../../assets/svg';
 import Player from './player';
-
-const fakeData = [
-	{ name: 'Bot Adidas', score: 200 },
-	{ name: 'Alfonso', score: 24 },
-	{ name: 'Bot Nike', score: 1 },
-];
-
-const getNewPlayerPos = (rounds, data) => {
-	const position = data.findIndex(({ score }) => score < rounds);
-	if (position < 0) return data.length;
-	return position;
-};
-
-const updateLeaderBoard = (data, positionPlayer, rounds) => {
-	const newLeadboards = [
-		...data.slice(0, positionPlayer),
-		{ name: DEFAULT_USER_NAME, score: rounds },
-		...data.slice(positionPlayer),
-	];
-	return newLeadboards.slice(0, 10);
-};
-
-const updateUserInLeaderboard = (leaderBoard, userName) => {
-	return leaderBoard.reduce((acc, userData) => {
-		if (userData.name === DEFAULT_USER_NAME) {
-			return [...acc, { ...userData, name: userName }];
-		}
-		return [...acc, userData];
-	}, []);
-};
-
-const populateData = () => {
-	return JSON.parse(window.localStorage.getItem('leaderBoard')) || fakeData;
-};
+import {
+	getNewPlayerPos,
+	updateUserInLeaderboard,
+	populateData,
+	updateLeaderBoard,
+} from './utils';
 
 const Leaderboard = ({ rounds, handleRestart }) => {
 	const [stateData, setData] = useState(populateData());
@@ -64,7 +35,7 @@ const Leaderboard = ({ rounds, handleRestart }) => {
 	}, []);
 
 	return (
-		<Wrapper>
+		<Wrapper data-qa='leaderboard'>
 			<GameoverTitle>
 				<h1>GAME OVER</h1>
 			</GameoverTitle>

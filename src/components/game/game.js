@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { getTilesColors, chooseLuckyTile } from './game-engine';
 import { INITAL_LIVES } from '../../constants/index';
+import Modal from '../modal';
 
+import { getTilesColors, chooseLuckyTile } from './game-engine';
 import GameBoard from './gameboard';
 import SettingsGame from './settings-game';
 import Countdown from './countdown';
-import Modal from '../modal';
 import Leaderboard from './leaderboard';
 
 const GameBoardWrapper = styled.div`
@@ -24,6 +24,13 @@ const Game = () => {
 	const [lives, setLives] = useState(INITAL_LIVES);
 	const [statusGame, setStatusGame] = useState('newRound');
 
+	const updateGameState = (newRound) => {
+		const luckyTileNow = chooseLuckyTile(newRound);
+		setRounds(newRound);
+		setLuckyTile(luckyTileNow);
+		setTiltesColors(getTilesColors(luckyTileNow, newRound));
+	};
+
 	useEffect(() => {
 		const luckyTile = chooseLuckyTile(rounds);
 		setLuckyTile(luckyTile);
@@ -32,10 +39,7 @@ const Game = () => {
 
 	const goToNextLevel = () => {
 		const newRound = rounds + 1;
-		const luckyTileNow = chooseLuckyTile(newRound);
-		setRounds(newRound);
-		setLuckyTile(luckyTileNow);
-		setTiltesColors(getTilesColors(luckyTileNow, newRound));
+		updateGameState(newRound);
 	};
 
 	const handleFail = () => {
@@ -51,10 +55,8 @@ const Game = () => {
 
 	const handleRestart = () => {
 		setLives(INITAL_LIVES);
-		setRounds(0);
-		const luckyTileNow = chooseLuckyTile(0);
-		setLuckyTile(luckyTileNow);
-		setTiltesColors(getTilesColors(luckyTileNow, 0));
+		const intialRound = 0;
+		updateGameState(intialRound);
 	};
 
 	return (
