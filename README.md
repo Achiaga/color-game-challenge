@@ -12,6 +12,15 @@ Created a web-application using React as presented below.
 - [React Testing Library](https://testing-library.com/): for unit-testing
 - [Cypress](https://www.cypress.io/): for e2e testing
 
+## ⚙️ Game Logic
+
+My first approach for the game logic was to make the difficulty of the color ( saturation and luminosity ) random ( 0-100 ) for generating a different shade of the color but with this approach I realize that this would ruin the spirit of a ```platform game``` ( the longer you play the harder it gets ) arriving to a  high round would depend too much on luck and not skill. 
+
+So the approach I followed is to make the difficulty increase linear so the first rounds would be easy and the higher you get the more difficult it is. Then I realize that it was boring playing so many easy rounds.
+
+So the final approach was to make it logaritmic so I could reduce the number of easy rounds enough to be intuitive for the user to know what to do in order to win but not so much that it is boring. I did this by using a logarithm on the saturation and luminosity of the HSL until it reaches a maximum so the game doesn't become impossible to solve.
+
+
 ## 🛠️ Installation Steps
 
 1. Clone the repository
@@ -44,17 +53,22 @@ yarn start
 
 (After installing the repository)
 
-1. Run test
+1. Run unit test
 
 ```bash
 yarn test
 ```
 
-## 🧪 Run Script for Winning
+2. Run headless cypress tests
+```bash
+yarn test:cypress:run
+```
+
+## 🤖 Run Script for Winning
 
 This script will infinitely win the game.
 
-1. Write script in the console of the web
+1. Vanilla JS script
 
 ```js
 const selectLuckyTile = () => {
@@ -111,7 +125,7 @@ console.log(`
 PRESS SPACE TO START THE GAME `);
 ```
 
-2. Babel parse to make it compatiable with all browrsers
+2. JS code Babel parsed to make it compatiable with all browrsers
 
 ```js
 "use strict";
@@ -187,9 +201,45 @@ console.log(" \n#############################\n#############################\n##
 
 3. Initialize script
 
-Copy the script on the console and press enter
+Copy the script on the developer tools console and press enter
 
 To start the game Press ```space```.
 
-The script will stope once the are no more lives left
+The script will stop once the are no more lives left.
+
+
+## 🖥 Cross-browser Compatibility
+
+Since I only have a Mac and iPhone I couldn't test all browsers compatibility since browsers behave differently in each OS. So the solution for this was trying some of the free resources on the internet that allows you to test your page on different browsers on different OS. Although the free trial is a bit limited.
+
+The resource I used is BrowserStack. That gave me this output: https://www.browserstack.com/screenshots/dacc506b4e8aca25743e4f4419fdf5ca953eb8b0
+
+<img width="1040" alt="Captura de pantalla 2020-11-17 a las 10 30 51" src="https://user-images.githubusercontent.com/44972334/99372069-fb9a7380-28bf-11eb-9b2b-d0388afb395d.png">
+
+> I only got two errors, one of them is a time error which doesn't mean an error of compatibility, it seems to be an error of BrowserStack since the device of the error is OS X Catalina firefox 63 that is the one I have and I checked that the page is compatible.
+
+<img width="1028" alt="Captura de pantalla 2020-11-17 a las 9 45 30" src="https://user-images.githubusercontent.com/44972334/99371637-74e59680-28bf-11eb-8309-0a0b140bf1b3.png">
+
+> And the second error is for windows 10 edge 18 where it seems like the settings of the game (rounds and likes) are not center, which means that flexbox isn't working but I could do a quick fix with margin auto on both children. And I also asked a friend to send me a screenshot of edge in one of the latest versions on windows 10 and it is perfectly compatible.
+
+![windows-10-edge](https://user-images.githubusercontent.com/44972334/99377282-5040ed00-28c6-11eb-8240-059fab81d596.jpg)
+
+The second resource I used to be sure of compatibility is: browserling
+
+> Where I could test different devices and it showed that the page is compatible with all the devices I tested with.
+
+Other resoruce I used is https://caniuse.com/ where I can quickly visualizing which frontend technologies are compatible with which browsers.
+
+<img width="1386" alt="Captura de pantalla 2020-11-17 a las 10 37 12" src="https://user-images.githubusercontent.com/44972334/99372717-deb27000-28c0-11eb-873f-34cee9f6d1b7.png">
+
+
+## 🔮 Future Improvments
+
+Features: 
+
+- Add a dynamic ranking/leaderboard list so while the user is playing, the player knows to which round needs to get in order to beat a new record.
+
+- Adding some animations like confetti for when is gameover or the user breaks a record. Or making an animation for when the palyer lose a live.
+
+- Adding github actions for making sure cypress test are passed before doing a merge.
 
