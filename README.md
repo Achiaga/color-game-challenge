@@ -233,7 +233,7 @@ Other resoruce I used is https://caniuse.com/ where I can quickly visualizing wh
 <img width="1386" alt="Captura de pantalla 2020-11-17 a las 10 37 12" src="https://user-images.githubusercontent.com/44972334/99372717-deb27000-28c0-11eb-873f-34cee9f6d1b7.png">
 
 
-## 🔮 Future Improvments
+## 🔮 Future Improvements
 
 Features: 
 
