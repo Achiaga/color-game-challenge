@@ -13,7 +13,7 @@ const BoardWrapper = styled.div`
 
 const enter = keyframes`
  0% {
-	transform: scale(0);
+	transform: scale(0.5);
  }
  100%{
 	transform: scale(1);
@@ -24,7 +24,7 @@ const Tile = styled.div`
 	opacity: ${(props) => (props.isVisible ? 1 : 0)};
 	border: 1px solid transparent;
 	position: relative;
-	flex-basis: ${({ numRows }) => numRows && getGirdTemplateColumnt(numRows)};
+	width: ${({ numRows }) => numRows && getGirdTemplateColumnt(numRows)};
 	margin: 5px;
 	box-sizing: border-box;
 	border-radius: 5px;
@@ -41,8 +41,8 @@ const Tile = styled.div`
 		transform: scale(0.97);
 		transition: transform 0.1s ease-in-out;
 	}
-	/* animation: ${enter} 0.5s; */
-	transition: all 0.5s ease;
+	animation: ${enter} 0.5s;
+	transition: background-color 0.35s;
 `;
 
 const GameBoard = ({ tilesColors, handleSuccess, handleFail, luckyTile }) => {
@@ -60,16 +60,17 @@ const GameBoard = ({ tilesColors, handleSuccess, handleFail, luckyTile }) => {
 		}
 		return handleSuccess(id);
 	};
-
+	const rowsNumbers = Math.sqrt(tilesColors.length);
 	return (
-		<BoardWrapper numRows={Math.sqrt(tilesColors.length)} id='game-board'>
+		<BoardWrapper numRows={rowsNumbers} id='game-board'>
 			{tilesColors.map((tileColor, index) => {
 				return (
 					<Tile
-						key={index}
+						key={`${tilesColors.length}-${index}`}
 						id={index}
 						data-testid='tile-id'
-						numRows={Math.sqrt(tilesColors.length)}
+						data-qa='tile'
+						numRows={rowsNumbers}
 						tileColor={tileColor}
 						onClick={handleClick}
 						isVisible={!failedTiles.includes(index)}

@@ -35,7 +35,7 @@ const Timer = ({ statusGame, setStatusGame, handleFail }) => {
 	}, []);
 
 	const countdown = () => {
-		setSecs((secs) => secs - 1);
+		setSecs((secs) => secs + 1);
 	};
 
 	useEffect(() => {

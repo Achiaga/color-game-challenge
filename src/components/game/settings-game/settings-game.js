@@ -33,11 +33,13 @@ const LivesWrapper = styled.div`
 `;
 
 const SettingsGame = ({ rounds, lives }) => {
+	if (lives < 0) return null;
+	const currentLives = [...Array(lives)];
 	return (
 		<Wrapper>
 			<h1 data-testid='rounds-id'>Round {rounds}</h1>
-			<LivesWrapper data-testid='heart-id'>
-				{[...Array(lives)].map((e, i) => (
+			<LivesWrapper data-testid='heart-id' id='hearts-lives'>
+				{currentLives.map((_, i) => (
 					<HeartSvg key={lives - i} />
 				))}
 			</LivesWrapper>

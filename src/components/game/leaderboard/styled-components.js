@@ -2,6 +2,8 @@ import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled.div`
 	padding: 0em;
+	display: flex;
+	flex-direction: column;
 `;
 
 export const Title = styled.div`
@@ -141,7 +143,9 @@ export const UserWrapper = styled.div`
 	}
 `;
 
-export const UserInfoWrapper = styled.div``;
+export const UserInfoWrapper = styled.div`
+	max-width: 90%;
+`;
 
 export const LeaderBar = styled.div`
 	margin-top: 8px;
